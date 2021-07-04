@@ -13,6 +13,9 @@ module.exports = {
       fontFamily: {
         sans: ['Spartan', ...defaultTheme.fontFamily.sans]
       },
+      borderWidth: {
+        '5': '5px'
+      },
       colors: {
         primary: 'hsl(180, 29%, 50%)',
         neutral: {
