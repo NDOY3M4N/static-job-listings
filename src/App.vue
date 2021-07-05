@@ -17,19 +17,10 @@
           leave-from-class="opacity-100 translate-y-0"
           leave-to-class="opacity-0 -translate-y-2">
           <div class="-mt-10" v-show="categoriesToFilter.length > 0">
-            <div class="p-5 flex items-center justify-between bg-white rounded-md shadow-lg">
-              <div class="flex-1 flex items-center gap-4 flex-wrap">
-                <div v-for="category in categoriesToFilter" :key="category" class="flex rounded overflow-hidden">
-                  <span class="p-2 bg-neutral-200 text-primary text-xs font-bold">{{ category }}</span>
-                  <button @click="removeFilter(category)" aria-label="Remove Tag" class="p-2 bg-primary transition-colors duration-300 hover:bg-neutral-400">
-                    <img src="/images/icon-remove.svg" alt="Remove tag">
-                  </button>
-                </div>
-              </div>
-              <div class="flex-none">
-                <button @click="removeAllFilter" class="px-3 py-2 text-sm font-bold text-neutral-300 hover:underline hover:text-primary">Clear</button>
-              </div>
-            </div>
+            <InputTag
+              :categories="categoriesToFilter"
+              @remove-filter="removeFilter"
+              @remove-all-filters="removeAllFilter"/>
           </div>
         </transition>
         <!-- Jobs -->
@@ -41,39 +32,9 @@
             leave-from-class="opacity-100 translate-x-0"
             leave-to-class="opacity-0 -translate-x-5"
             leave-active-class="transform transition duration-500 ease-in-out">
-            <li v-for="job in jobsFiltered" :key="job.id"
-              class="relative p-6 bg-white rounded-md shadow-lg divide-y sm:px-10 sm:py-8 lg:divide-y-0 lg:flex lg:items-center lg:justify-between"
-              :class="{'border-l-5 border-primary': job.featured }">
-              <div class="pb-4 sm:flex sm:items-center sm:flex-1 lg:pb-0">
-                <div class="absolute top-0 left-5 transform -translate-y-1/2 sm:static sm:translate-y-0 sm:flex-none">
-                  <img :src="job.logo" :alt="job.company"
-                    class="w-16 h-auto object-cover sm:w-24 sm:h-auto">
-                </div>
-                <div class="mt-4 space-y-3 sm:mt-0 sm:ml-6">
-                  <div class="inline-flex items-center space-x-3">
-                    <h1 class="text-primary text-sm font-bold pt-px">{{ job.company }}</h1>
-                    <span v-show="job.new" class="py-1.5 px-2.5 bg-primary rounded-full text-white text-xs leading-none font-bold uppercase">New!</span>
-                    <span v-show="job.featured" class="py-1.5 px-2.5 bg-black rounded-full text-white text-xs leading-none font-bold uppercase">Featured</span>
-                  </div>
-                  <h2 class="text-neutral-400 text-md font-bold cursor-pointer transition-colors duration-300 hover:text-primary">{{ job.position }}</h2>
-                  <div class="text-neutral-300 text-sm inline-flex items-center space-x-1">
-                    <span>{{ job.postedAt }}</span>
-                    <span class="text-xl">&bull;</span>
-                    <span>{{ job.contract }}</span>
-                    <span class="text-xl">&bull;</span>
-                    <span>{{ job.location }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="pt-5 flex items-center gap-4 flex-wrap lg:pt-0 lg:flex-none">
-                <button v-for="category in categorize(job.id)" :key="category"
-                  @click="addFilter(category)"
-                  class="p-2 bg-neutral-200 text-primary text-xs font-bold rounded transition-colors duration-300 hover:bg-primary hover:text-white">
-                  {{ category }}
-                </button>
-              </div>
-            </li>
+            <JobCard
+              v-for="job in jobsFiltered" :key="job.id"
+              :job="job" @add-filter="addFilter" />
           </transition-group>
         </ul>
       </main>
@@ -89,16 +50,13 @@
 <script>
 import { ref, computed } from 'vue'
 import data from './data'
+import InputTag from './components/InputTag.vue'
+import JobCard from './components/JobCard.vue'
 
 export default {
+  components: { InputTag, JobCard },
   setup() {
     const jobs = ref(data)
-
-    const categorize = (jobId) => {
-      const jobToCategorize = jobs.value.find(job => job.id === jobId)
-
-      return [jobToCategorize.role, jobToCategorize.level, jobToCategorize.languages, jobToCategorize.tools].flat()
-    }
 
     const categoriesToFilter = ref([])
 
@@ -142,7 +100,7 @@ export default {
       }
     })
 
-    return { jobs, categorize, categoriesToFilter, addFilter, removeFilter, removeAllFilter, jobsFiltered }
+    return { jobs, categoriesToFilter, addFilter, removeFilter, removeAllFilter, jobsFiltered }
   }
 }
 </script>
