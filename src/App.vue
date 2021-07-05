@@ -26,14 +26,15 @@
         <!-- Jobs -->
         <ul class="py-20 space-y-14 sm:space-y-10">
           <transition-group
-            enter-active-class="transform transition duration-500 ease-in-out"
-            enter-from-class="opacity-0 -translate-x-5"
-            enter-to-class="opacity-100 translate-x-0"
-            leave-from-class="opacity-100 translate-x-0"
-            leave-to-class="opacity-0 -translate-x-5"
-            leave-active-class="transform transition duration-500 ease-in-out">
+            enter-active-class="transform transition duration-700 ease-in-out"
+            enter-from-class="opacity-0 scale-75"
+            enter-to-class="opacity-100 scale-100"
+            leave-from-class="opacity-100 scale-100"
+            leave-to-class="opacity-0 scale-75"
+            leave-active-class="transform transition duration-700 ease-in-out">
             <JobCard
               v-for="job in jobsFiltered" :key="job.id"
+              class="transition duration-500 ease-in-out"
               :job="job" @add-filter="addFilter" />
           </transition-group>
         </ul>
