@@ -1,6 +1,6 @@
 # Frontend Mentor - Job listings with filtering solution
 
-This is a solution to the [Job listings with filtering challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/job-listings-with-filtering-ivstIPCt). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+This is a solution to the [Job listings with filtering challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/job-listings-with-filtering-ivstIPCt). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
 
@@ -11,6 +11,7 @@ This is a solution to the [Job listings with filtering challenge on Frontend Men
 - [My process](#my-process)
   - [Built with](#built-with)
 - [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
 ## Overview
 
@@ -40,9 +41,13 @@ Users should be able to:
 - Mobile-first workflow
 - [Vue](https://v3.vuejs.org/) - JS library
 - [Vite](https://vitejs.dev) - Build Tool
-- [Tailwind CSS](https://tailwindcss.com/) - THE CSS Framework
+- [Tailwind CSS](https://tailwindcss.com/) - "THE" CSS Framework
 
 ## Author
 
 - Frontend Mentor - [@NDOY3M4N](https://www.frontendmentor.io/profile/NDOY3M4N)
 - Twitter - [@NDOY3M4N](https://www.twitter.com/NDOY3M4N)
+
+## Acknowledgments
+
+Filtering the job listings is inspired from [@BenjaminVillatte](https://github.com/BenjaminVillatte/fem-static-job-listings) solution. All the credit goes to him, thanks mate!

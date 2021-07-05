@@ -61,46 +61,37 @@ export default {
     const categoriesToFilter = ref([])
 
     const addFilter = (category) => {
-      const categoryExists = categoriesToFilter.value.find(cat => cat === category)
-      if (categoryExists) return
-
-      categoriesToFilter.value.push(category)
-      jobsFiltered.value = categoriesToFilter.value
+      if (categoriesToFilter.value.indexOf(category) < 0) {
+        categoriesToFilter.value.push(category)
+      }
     }
 
     const removeFilter = (category) => {
-      const categoryIndex = categoriesToFilter.value.findIndex(cat => cat === category)
+      const categoryIndex = categoriesToFilter.value.indexOf(category)
 
       categoriesToFilter.value.splice(categoryIndex, 1)
-      jobs.value = data
-      jobsFiltered.value = categoriesToFilter.value
     }
 
     const removeAllFilter = () => {
       categoriesToFilter.value = []
-
-      jobs.value = data
     }
 
-    const jobsFiltered = computed({
-      get: () => jobs.value,
-      set: categories => {
-        categories.forEach(categorie => {
-          jobs.value = jobs.value.filter(job => {
-            const CONDITION_1 = job.role === categorie
-            const CONDITION_2 = job.level === categorie
-            const CONDITION_3 = job.languages.find(lang => lang === categorie)
-            const CONDITION_4 = job.tools.find(tool => tool === categorie)
-  
-            if (CONDITION_1 || CONDITION_2 || CONDITION_3 || CONDITION_4) {
-              return job
-            }
-          })
+    const jobsFiltered = computed(() => {
+      if (categoriesToFilter.value.length === 0) return jobs.value
+
+      return jobs.value.filter(job => {
+        let match = true
+        const jobCategories = [job.languages, job.role, job.level, job.tools].flat()
+
+        categoriesToFilter.value.forEach(categorie => {
+          match = match && (jobCategories.indexOf(categorie) >= 0)
         })
-      }
+
+        return match
+      })
     })
 
-    return { jobs, categoriesToFilter, addFilter, removeFilter, removeAllFilter, jobsFiltered }
+    return { categoriesToFilter, addFilter, removeFilter, removeAllFilter, jobsFiltered }
   }
 }
 </script>
